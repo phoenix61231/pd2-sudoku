@@ -33,9 +33,10 @@ void Sudoku::solve(){
 		}
 	}
 	//done checked
-	int plus=0,count=0;
+	int plus=0,count;
 	while(plus<10){
 		//count
+		count=0;
 		for(row=0;row<9;row++){
 			for(column=0;column<9;column++){
 				if(map[row][column]!=0){count++;}
@@ -53,6 +54,7 @@ void Sudoku::solve(){
 			}
 			break;
 		}
+		else if(count<17){break;}
 		//done checked
 		
 		//analyze the each row,column or square
@@ -76,8 +78,7 @@ void Sudoku::solve(){
 				}
 			}
 		}
-		//rdone checked
-		
+		//rdone checked		
 		//column
 		for(column=0;column<9;column++){
 			for(anacount=0;anacount<9;anacount++){
@@ -98,8 +99,7 @@ void Sudoku::solve(){
 				}
 			}
 		}
-		//cdone checked
-		
+		//cdone checked		
 		//square
 		for(int sqcou1=0;sqcou1<7;sqcou1+=3){
 			for(int sqcou2=0;sqcou2<7;sqcou2+=3){
@@ -126,8 +126,7 @@ void Sudoku::solve(){
 				}
 			}
 		}
-		//sdone checked
-		
+		//sdone checked		
 		//done
 		//fill in the blanks
 		int posans=0;
@@ -145,7 +144,14 @@ void Sudoku::solve(){
 		plus++;
 	}
 	//leave
+	count=0;
+	for(row=0;row<9;row++){
+		for(column=0;column<9;column++){
+			if(map[row][column]!=0){count++;}
+		}
+	}
 	if(count==81){exit(1);}
+	else if(count<17){cout<<"0"<<endl;exit(1);}
 	for(row=0;row<9;row++){
 		for(column=0;column<9;column++){
 			count=0;
@@ -155,7 +161,8 @@ void Sudoku::solve(){
 			if(count==0){cout<<"0"<<endl;exit(1);}
 		}
 	}
-	if(count!=81){printf("2");}	
+	if(count<50){printf("2");exit(1);}
+	else{cout<<"0"<<endl;exit(1);}	
 	//done
 }//done checked
 
@@ -278,10 +285,5 @@ void Sudoku::transform(){
 	changeNum(7,3);
 	flip(0);
 	changeRow(2,1);
-	for(row=0;row<9;row++){
-		for(column=0;column<9;column++){
-			if(column<8){printf("%d ",map[row][column]);}
-			else{printf("%d\n",map[row][column]);}
-		}
-	}
+	
 }//done checked

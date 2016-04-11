@@ -285,11 +285,3 @@ void Sudoku::transform(){
 		}
 	}
 }//done checked
-
-main()
-	{
-		Sudoku ss;
-		ss.readIn();
-		ss.transform();
-		return 0;
-	}

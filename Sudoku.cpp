@@ -3,19 +3,18 @@
 int map[9][9]={0};
 void Sudoku::giveQuestion(){
 	cout<<"1 0 8 0 0 0 0 0 0\n2 3 0 0 1 5 8 0 0\n0 5 0 0 0 3 0 6 0\n3 0 0 0 2 0 0 8 0\n9 8 0 0 3 0 0 1 6\n0 1 0 0 7 0 0 0 3\n0 9 0 8 0 0 0 2 0\n0 0 3 1 5 0 0 9 8\n0 0 0 0 0 0 6 0 4\n"<<endl;	
-}//done
+}//done checked no problem
 
 void Sudoku::readIn(){
-	int mapcount1=0,mapcount2=0;
+	int row=0,column=0,tmp=0;
 	char drop;
-	for(mapcount2=0;mapcount2<9;mapcount2++){
-		scanf("%d%c",&map[mapcount1][mapcount2],&drop);
-		if(drop=='\n'){mapcount1++;}
+	while(scanf("%d%c",&tmp,&drop)!=EOF){
+		if(drop!='\n'){map[row][column]=tmp;column++;}
+		else{map[row][column]=tmp;column=0;row++;}
 	}
-}//done checked
+}//done checked no problem
 
 void Sudoku::solve(){	
-	readIn();
 	int num=0;
 	//initialize the possiblenumbers database 
 	int row=0,column=0,ini=0;
@@ -33,16 +32,16 @@ void Sudoku::solve(){
 			}
 		}
 	}
-	//done
+	//done checked
 	int plus=0,count=0;
-	while(plus<5){
+	while(plus<10){
 		//count
 		for(row=0;row<9;row++){
 			for(column=0;column<9;column++){
 				if(map[row][column]!=0){count++;}
 			}
 		}
-		//done
+		//done checked 
 		//print ans
 		if(count==81){
 			cout<<"1"<<endl;
@@ -54,9 +53,11 @@ void Sudoku::solve(){
 			}
 			break;
 		}
-		//done
+		//done checked
+		
 		//analyze the each row,column or square
-		bool ana[9],anacount;
+		bool ana[9];
+		int anacount;
 		//row
 		for(row=0;row<9;row++){
 			for(anacount=0;anacount<9;anacount++){
@@ -75,7 +76,8 @@ void Sudoku::solve(){
 				}
 			}
 		}
-		//rdone
+		//rdone checked
+		
 		//column
 		for(column=0;column<9;column++){
 			for(anacount=0;anacount<9;anacount++){
@@ -96,7 +98,8 @@ void Sudoku::solve(){
 				}
 			}
 		}
-		//cdone
+		//cdone checked
+		
 		//square
 		for(int sqcou1=0;sqcou1<7;sqcou1+=3){
 			for(int sqcou2=0;sqcou2<7;sqcou2+=3){
@@ -123,7 +126,8 @@ void Sudoku::solve(){
 				}
 			}
 		}
-		//sdone
+		//sdone checked
+		
 		//done
 		//fill in the blanks
 		int posans=0;
@@ -140,6 +144,7 @@ void Sudoku::solve(){
 		}
 		plus++;
 	}
+	//leave
 	if(count==81){exit(1);}
 	for(row=0;row<9;row++){
 		for(column=0;column<9;column++){
@@ -150,9 +155,9 @@ void Sudoku::solve(){
 			if(count==0){cout<<"0"<<endl;exit(1);}
 		}
 	}
-	printf("2");	
-	
-}//done
+	if(count!=81){printf("2");}	
+	//done
+}//done checked
 
 void Sudoku::changeNum(int num1, int num2){
 	for(int row=0;row<9;row++){
@@ -268,12 +273,11 @@ void Sudoku::flip(int flipway){
 
 void Sudoku::transform(){
 	int row,column;
-	srand(time(NULL));
-	rotate(rand()%101);
-	changeNum(rand()%10,rand()%10);
-	changeNum(rand()%10,rand()%10);
+	rotate(83);
+	changeNum(1,4);
+	changeNum(7,3);
 	flip(0);
-	changeRow(rand()%3,rand()%3);
+	changeRow(2,1);
 	for(row=0;row<9;row++){
 		for(column=0;column<9;column++){
 			if(column<8){printf("%d ",map[row][column]);}
@@ -281,3 +285,11 @@ void Sudoku::transform(){
 		}
 	}
 }//done checked
+
+main()
+	{
+		Sudoku ss;
+		ss.readIn();
+		ss.transform();
+		return 0;
+	}
